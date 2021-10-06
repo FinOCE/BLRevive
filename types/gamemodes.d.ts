@@ -1,4 +1,4 @@
-type PlaylistName
+type GamemodeName
     = 'Deathmatch'
     | 'Team deathmatch'
     | 'Capture the flag'
@@ -8,7 +8,7 @@ type PlaylistName
     | 'Last man standing'
     | 'Search and destroy'
 
-type PlaylistId
+type GamemodeId
     = 'DM'
     | 'TDM'
     | 'CTF'
@@ -18,6 +18,6 @@ type PlaylistId
     | 'LMS'
     | 'SAD'
 
-type Playlists = {
-    [k in PlaylistId]: PlaylistName
+type Gamemodes = {
+    [k in GamemodeId]: GamemodeName
 }
