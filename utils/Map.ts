@@ -2,21 +2,24 @@ export default class Map {
     public mapName: MapName
     public mapFileName: MapFileName
 
-    constructor(name: MapName | MapFileName) {
-        if (Map.isOfTypeMapName(name)) {
-            // name is a MapName
-            this.mapName = name
-            this.mapFileName = Map.nameToFile(name)
-        } else if (Map.isOfTypeMapFileName(name)) {
-            // name is a MapFileName
-            this.mapName = Map.fileToName(name)
-            this.mapFileName = name
+    constructor(identifier: MapName | MapFileName) {
+        if (Map.isOfTypeMapName(identifier)) {
+            // identifier is a MapName
+            this.mapName = identifier
+            this.mapFileName = Map.nameToFile(identifier)
+        } else if (Map.isOfTypeMapFileName(identifier)) {
+            // identifier is a MapFileName
+            this.mapName = Map.fileToName(identifier)
+            this.mapFileName = identifier
         } else {
-            // name is neither a MapName nor MapFileName
-            throw `${name} is not a valid map!`
+            // identifier is neither a MapName nor MapFileName
+            throw `${identifier} is not a valid map!`
         }
     }
 
+    /**
+     * Get an object where the keys are map file names and values are corresponding display names
+     */
     public static get maps(): Maps {
         return {
             FoxEntry: 'Lobby',
@@ -73,7 +76,7 @@ export default class Map {
      * Convert a map display name to its file name
      */
     public static fileToName(mapFileName: MapFileName): MapName {
-        return Map.mapNames[Map.mapFileNames.findIndex(name => name === mapFileName)]
+        return Map.maps[mapFileName]
     }
 
     /**
