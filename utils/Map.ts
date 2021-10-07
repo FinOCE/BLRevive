@@ -64,14 +64,14 @@ export default class Map {
    * Check if a string is of type `MapName`
    */
   public static isOfTypeMapName(input: string): input is MapName {
-    return Map.mapNames.some((name) => name === input)
+    return Map.mapNames.some(name => name === input)
   }
 
   /**
    * Check if a string is of type `MapFileName`
    */
   public static isOfTypeMapFileName(input: string): input is MapFileName {
-    return Map.mapFileNames.some((name) => name === input)
+    return Map.mapFileNames.some(name => name === input)
   }
 
   /**
@@ -85,6 +85,6 @@ export default class Map {
    * Convert a map file name to its display name
    */
   public static nameToFile(mapName: MapName): MapFileName {
-    return Map.mapFileNames[Map.mapNames.findIndex((name) => name === mapName)]
+    return Map.mapFileNames[Map.mapNames.findIndex(name => name === mapName)]
   }
 }

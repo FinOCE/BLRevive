@@ -8,15 +8,7 @@ export type GamemodeName =
   | 'Last man standing'
   | 'Search and destroy'
 
-export type GamemodeId =
-  | 'DM'
-  | 'TDM'
-  | 'CTF'
-  | 'KC'
-  | 'KOTH'
-  | 'LTS'
-  | 'LMS'
-  | 'SAD'
+export type GamemodeId = 'DM' | 'TDM' | 'CTF' | 'KC' | 'KOTH' | 'LTS' | 'LMS' | 'SAD'
 
 export type Gamemodes = {
   [k in GamemodeId]: GamemodeName

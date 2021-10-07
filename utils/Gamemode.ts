@@ -53,14 +53,14 @@ export default class Gamemode {
    * Check if a string is of type `GamemodeName`
    */
   public static isOfTypeGamemodeName(input: string): input is GamemodeName {
-    return Gamemode.gamemodeNames.some((name) => name === input)
+    return Gamemode.gamemodeNames.some(name => name === input)
   }
 
   /**
    * Check if a string is of type `GamemodeId`
    */
   public static isOfTypeGamemodeId(input: string): input is GamemodeId {
-    return Gamemode.gamemodeIds.some((name) => name === input)
+    return Gamemode.gamemodeIds.some(name => name === input)
   }
 
   /**
@@ -74,8 +74,6 @@ export default class Gamemode {
    * Convert a gamemode display name to its ID
    */
   public static nameToId(gamemodeName: GamemodeName): GamemodeId {
-    return Gamemode.gamemodeIds[
-      Gamemode.gamemodeNames.findIndex((name) => name === gamemodeName)
-    ]
+    return Gamemode.gamemodeIds[Gamemode.gamemodeNames.findIndex(name => name === gamemodeName)]
   }
 }

@@ -3,7 +3,7 @@ import ini from 'ini'
 // import { spawn } from 'child_process'
 import Map from './Map'
 import Gamemode from './Gamemode'
-import { ServerOptions } from '@typings/server'
+import { RawServerOptions, ServerOptions } from '@typings/server'
 
 export default class Server {
   public options: ServerOptions
@@ -12,6 +12,9 @@ export default class Server {
     this.options = this.getOptionsFromFile('config.ini')
   }
 
+  /**
+   * Start the server process
+   */
   public start(): void {
     // const process = spawn('node', ['test.js'])
     // process.stdout.on('data', (data: Buffer) => {
@@ -29,35 +32,29 @@ export default class Server {
    * Read a given `ini` file for server options
    */
   private getOptionsFromFile(path: string): ServerOptions {
+    // Get file from path
     const file = fs.readFileSync(path, { encoding: 'utf-8' })
     const rawOptions = ini.parse(file)
 
-    console.log(rawOptions)
+    // Replace all valid numbers strings with numbers
+    for (const i in rawOptions) {
+      const int = parseInt(rawOptions[i])
+      if (!isNaN(int)) rawOptions[i] = int
+    }
 
-    rawOptions.bots = parseInt(rawOptions.bots)
-    rawOptions.timeLimit = parseInt(rawOptions.timeLimit)
-    rawOptions.startingCP = parseInt(rawOptions.startingCP)
+    // Check if the data is correct
+    if (!this.isOfTypeRawServerOptions(rawOptions)) throw 'Invalid server options!'
 
-    if (typeof rawOptions.bots !== 'number')
-      throw `${rawOptions.bots} is not a valid number of bots!`
-    if (typeof rawOptions.timeLimit !== 'number')
-      throw `${rawOptions.timeLimit} is not a valid time limit!`
-    if (typeof rawOptions.autoRestart !== 'boolean')
-      throw `${rawOptions.autoRestart} is not a boolean!`
-    if (typeof rawOptions.startingCP !== 'number')
-      throw `${rawOptions.startingCP} is not a valid amount of starting CP!`
-
-    const options: Partial<ServerOptions> = {}
-
-    options.map = new Map(rawOptions.map)
-    options.gamemode = new Gamemode(rawOptions.gamemode)
-    options.playlist = new Gamemode(rawOptions.playlist)
-    options.bots = rawOptions.bots
-    options.timeLimit = rawOptions.timeLimit
-    options.autoRestart = rawOptions.autoRestart
-    options.startingCP = rawOptions.startingCP
-
-    return options as ServerOptions
+    // Return ServerProperties
+    return {
+      bots: rawOptions.bots,
+      timeLimit: rawOptions.timeLimit,
+      autoRestart: rawOptions.autoRestart,
+      startingCP: rawOptions.startingCP,
+      map: new Map(rawOptions.map),
+      gamemode: new Gamemode(rawOptions.gamemode),
+      playlist: new Gamemode(rawOptions.playlist)
+    }
   }
 
   /**
@@ -107,5 +104,20 @@ export default class Server {
    */
   public setStartingCP(value: number): void {
     this.options.startingCP = value
+  }
+
+  /**
+   * Check if a given input matches the type `RawServerOptions`
+   */
+  isOfTypeRawServerOptions(input: Record<string, unknown>): input is RawServerOptions {
+    // TODO: Check if the map, gamemode, and playlist match valid strings
+    if (typeof input.map !== 'string') return false
+    if (typeof input.gamemode !== 'string') return false
+    if (typeof input.playlist !== 'string') return false
+    if (typeof input.bots !== 'number' || isNaN(input.bots)) return false
+    if (typeof input.timeLimit !== 'number' || isNaN(input.timeLimit)) return false
+    if (typeof input.autoRestart !== 'boolean') return false
+    if (typeof input.startingCP !== 'number' || isNaN(input.startingCP)) return false
+    return true
   }
 }
