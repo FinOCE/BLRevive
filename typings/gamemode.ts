@@ -1,4 +1,4 @@
-type GamemodeName =
+export type GamemodeName =
   | 'Deathmatch'
   | 'Team deathmatch'
   | 'Capture the flag'
@@ -8,8 +8,16 @@ type GamemodeName =
   | 'Last man standing'
   | 'Search and destroy'
 
-type GamemodeId = 'DM' | 'TDM' | 'CTF' | 'KC' | 'KOTH' | 'LTS' | 'LMS' | 'SAD'
+export type GamemodeId =
+  | 'DM'
+  | 'TDM'
+  | 'CTF'
+  | 'KC'
+  | 'KOTH'
+  | 'LTS'
+  | 'LMS'
+  | 'SAD'
 
-type Gamemodes = {
+export type Gamemodes = {
   [k in GamemodeId]: GamemodeName
 }

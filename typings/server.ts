@@ -1,7 +1,7 @@
 import Map from '../utils/Map'
 import Gamemode from '../utils/Gamemode'
 
-type ServerOptions = {
+export type ServerOptions = {
   map: Map
   gamemode: Gamemode
   playlist: Gamemode

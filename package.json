@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node-dev --respawn index.ts"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FinOCE/BLRevive.git"
+  },
+  "author": "Finley Sherwood",
   "license": "ISC",
   "devDependencies": {
     "@types/ini": "^1.3.30",
@@ -15,12 +19,20 @@
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^14.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unused-imports": "^1.1.5",
     "prettier": "^2.4.1",
     "ts-node": "^10.2.1",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.3",
     "typescript-eslint": "0.0.1-alpha.0"
   },
   "dependencies": {
+    "child_process": "^1.0.2",
     "ini": "^2.0.0"
   }
 }

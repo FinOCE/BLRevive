@@ -1,8 +1,9 @@
 import fs from 'fs'
 import ini from 'ini'
+// import { spawn } from 'child_process'
 import Map from './Map'
 import Gamemode from './Gamemode'
-import { ServerOptions } from '../types/servers'
+import { ServerOptions } from '@typings/server'
 
 export default class Server {
   public options: ServerOptions
@@ -11,12 +12,31 @@ export default class Server {
     this.options = this.getOptionsFromFile('config.ini')
   }
 
+  public start(): void {
+    // const process = spawn('node', ['test.js'])
+    // process.stdout.on('data', (data: Buffer) => {
+    //   console.log(data.toString())
+    // })
+    // process.stderr.on('data', (data: Buffer) => {
+    //   console.log(data.toString())
+    // })
+    // process.on('close', code => {
+    //   console.log(`Exited with code ${code}`)
+    // })
+  }
+
   /**
    * Read a given `ini` file for server options
    */
   private getOptionsFromFile(path: string): ServerOptions {
-    let file = fs.readFileSync(path, { encoding: 'utf-8' })
-    let rawOptions = ini.parse(file)
+    const file = fs.readFileSync(path, { encoding: 'utf-8' })
+    const rawOptions = ini.parse(file)
+
+    console.log(rawOptions)
+
+    rawOptions.bots = parseInt(rawOptions.bots)
+    rawOptions.timeLimit = parseInt(rawOptions.timeLimit)
+    rawOptions.startingCP = parseInt(rawOptions.startingCP)
 
     if (typeof rawOptions.bots !== 'number')
       throw `${rawOptions.bots} is not a valid number of bots!`
@@ -27,7 +47,7 @@ export default class Server {
     if (typeof rawOptions.startingCP !== 'number')
       throw `${rawOptions.startingCP} is not a valid amount of starting CP!`
 
-    let options: Partial<ServerOptions> = {}
+    const options: Partial<ServerOptions> = {}
 
     options.map = new Map(rawOptions.map)
     options.gamemode = new Gamemode(rawOptions.gamemode)

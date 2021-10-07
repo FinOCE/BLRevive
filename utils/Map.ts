@@ -1,3 +1,5 @@
+import { MapFileName, MapName, Maps } from '@typings/map'
+
 export default class Map {
   public mapName: MapName
   public mapFileName: MapFileName

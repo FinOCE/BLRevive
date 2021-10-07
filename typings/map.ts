@@ -1,4 +1,4 @@
-type MapName =
+export type MapName =
   | 'Lobby'
   | 'Helodeck'
   | 'Heavy Metal'
@@ -19,7 +19,7 @@ type MapName =
   | 'Rig'
   | 'Death Metal'
 
-type MapFileName =
+export type MapFileName =
   | 'FoxEntry'
   | 'helodeck'
   | 'heavymetal'
@@ -40,6 +40,6 @@ type MapFileName =
   | 'rig'
   | 'deathmetal'
 
-type Maps = {
+export type Maps = {
   [k in MapFileName]: MapName
 }
