@@ -3,10 +3,11 @@ import ini from 'ini'
 import { ChildProcess, spawn } from 'child_process'
 import Map from './Map'
 import Gamemode from './Gamemode'
-import { RawServerOptions, ServerOptions } from '@typings/server'
+import { RawServerOptions, ServerOptions, ServerStats } from '@typings/server'
 
 export default class Server {
   public options: ServerOptions
+  public stats?: ServerStats // TODO: Get server stats from node-ffi
   public process?: ChildProcess
 
   constructor() {
@@ -19,9 +20,25 @@ export default class Server {
   public async start(): Promise<void> {
     if (this.process) throw 'The server is already running!'
     return new Promise((resolve, reject) => {
-      this.process = spawn('node', ['test.js']) //TEMPORARY
+      const blue = '\x1b[34m'
+      const yellow = '\x1b[33m'
+      const white = '\x1b[37m'
+      this.process = spawn('node', ['test.js']) // TODO: Start actual game server
       this.process.once('spawn', () => {
-        console.log('The server has successfully started!')
+        console.log(`\n${blue}The server has successfully started!`)
+        console.log(
+          [
+            '',
+            `${yellow}map: ${white}${this.options.map.mapName}`,
+            `${yellow}gamemode: ${white}${this.options.gamemode.gamemodeName}`,
+            `${yellow}platlist: ${white}${this.options.playlist.gamemodeName}`,
+            `${yellow}bots: ${white}${this.options.bots}`,
+            `${yellow}timeLiimit: ${white}${this.options.timeLimit}`,
+            `${yellow}autoRestart: ${white}${this.options.autoRestart}`,
+            `${yellow}startingCP: ${white}${this.options.startingCP}`,
+            ''
+          ].join('\n  ')
+        )
         resolve()
       })
     })

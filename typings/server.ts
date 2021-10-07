@@ -22,3 +22,8 @@ export type RawServerOptions = {
   autoRestart: boolean
   startingCP: number
 }
+
+export type ServerStats = {
+  playerCount: number
+  currentMap: MapName
+}
