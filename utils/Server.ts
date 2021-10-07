@@ -1,12 +1,13 @@
 import fs from 'fs'
 import ini from 'ini'
-// import { spawn } from 'child_process'
+import { ChildProcess, spawn } from 'child_process'
 import Map from './Map'
 import Gamemode from './Gamemode'
 import { RawServerOptions, ServerOptions } from '@typings/server'
 
 export default class Server {
   public options: ServerOptions
+  public process?: ChildProcess
 
   constructor() {
     this.options = this.getOptionsFromFile('config.ini')
@@ -15,17 +16,42 @@ export default class Server {
   /**
    * Start the server process
    */
-  public start(): void {
-    // const process = spawn('node', ['test.js'])
-    // process.stdout.on('data', (data: Buffer) => {
-    //   console.log(data.toString())
-    // })
-    // process.stderr.on('data', (data: Buffer) => {
-    //   console.log(data.toString())
-    // })
-    // process.on('close', code => {
-    //   console.log(`Exited with code ${code}`)
-    // })
+  public async start(): Promise<void> {
+    if (this.process) throw 'The server is already running!'
+    return new Promise((resolve, reject) => {
+      this.process = spawn('node', ['test.js']) //TEMPORARY
+      this.process.once('spawn', () => {
+        console.log('The server has successfully started!')
+        resolve()
+      })
+    })
+  }
+
+  /**
+   * Restart the server process
+   */
+  public async restart(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.process) throw 'No server is currently running!'
+      this.stop()
+      this.start().then(() => resolve())
+    })
+  }
+
+  /**
+   * Stop the server process
+   */
+  public stop(): void {
+    if (!this.process) throw 'No server is currently running!'
+    this.process.kill()
+  }
+
+  /**
+   * Assign actions to events that take place on the server
+   */
+  public on(event: 'stdout' | 'stderr', callback: (data: string) => void): void {
+    if (!this.process) throw 'No server is currently running!'
+    this.process[event]?.on('data', (data: Buffer) => callback(data.toString()))
   }
 
   /**
