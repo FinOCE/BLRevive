@@ -29,13 +29,13 @@ export default class Server {
         console.log(
           [
             '',
-            `${yellow}map: ${white}${this.options.map.mapName}`,
-            `${yellow}gamemode: ${white}${this.options.gamemode.gamemodeName}`,
-            `${yellow}platlist: ${white}${this.options.playlist.gamemodeName}`,
-            `${yellow}bots: ${white}${this.options.bots}`,
-            `${yellow}timeLiimit: ${white}${this.options.timeLimit}`,
-            `${yellow}autoRestart: ${white}${this.options.autoRestart}`,
-            `${yellow}startingCP: ${white}${this.options.startingCP}`,
+            `${yellow}Map: ${white}${this.options.map.mapName}`,
+            `${yellow}Gamemode: ${white}${this.options.gamemode.gamemodeName}`,
+            `${yellow}Platlist: ${white}${this.options.playlist.gamemodeName}`,
+            `${yellow}Bot Count: ${white}${this.options.bots}`,
+            `${yellow}Time Limit: ${white}${this.options.timeLimit}`,
+            `${yellow}Auto Restart: ${white}${this.options.autoRestart}`,
+            `${yellow}Starting CP: ${white}${this.options.startingCP}`,
             ''
           ].join('\n  ')
         )
