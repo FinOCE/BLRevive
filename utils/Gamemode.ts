@@ -1,11 +1,15 @@
 import { GamemodeId, GamemodeName, Gamemodes } from '@typings/gamemode'
 
 export default class Gamemode {
-  public gamemodeName: GamemodeName
-  public gamemodeId: GamemodeId
+  public gamemodeName: GamemodeName | null
+  public gamemodeId: GamemodeId | null
 
-  constructor(identifier: GamemodeName | GamemodeId) {
-    if (Gamemode.isOfTypeGamemodeName(identifier)) {
+  constructor(identifier: GamemodeName | GamemodeId | '') {
+    if (identifier === '') {
+      // Identifier is empty
+      this.gamemodeName = null
+      this.gamemodeId = null
+    } else if (Gamemode.isOfTypeGamemodeName(identifier)) {
       // identifier is a GamemodeName
       this.gamemodeName = identifier
       this.gamemodeId = Gamemode.nameToId(identifier)

@@ -1,11 +1,15 @@
 import { MapFileName, MapName, Maps } from '@typings/map'
 
 export default class Map {
-  public mapName: MapName
-  public mapFileName: MapFileName
+  public mapName: MapName | null
+  public mapFileName: MapFileName | null
 
-  constructor(identifier: MapName | MapFileName) {
-    if (Map.isOfTypeMapName(identifier)) {
+  constructor(identifier: MapName | MapFileName | '') {
+    if (identifier === '') {
+      // Identifier is empty
+      this.mapName = null
+      this.mapFileName = null
+    } else if (Map.isOfTypeMapName(identifier)) {
       // identifier is a MapName
       this.mapName = identifier
       this.mapFileName = Map.nameToFile(identifier)

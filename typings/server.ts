@@ -11,6 +11,9 @@ export type ServerOptions = {
   timeLimit: number
   autoRestart: boolean
   startingCP: number
+  name: string
+  port: number
+  maxPlayers: number
 }
 
 export type RawServerOptions = {
@@ -21,6 +24,9 @@ export type RawServerOptions = {
   timeLimit: number
   autoRestart: boolean
   startingCP: number
+  name: string
+  port: number
+  maxPlayers: number
 }
 
 export type ServerStats = {

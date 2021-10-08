@@ -23,7 +23,21 @@ export default class Server {
       const blue = '\x1b[34m'
       const yellow = '\x1b[33m'
       const white = '\x1b[37m'
-      this.process = spawn('node', ['test.js']) // TODO: Start actual game server
+      this.process = spawn(
+        'C:/Program Files (x86)/Steam/steamapps/common/blacklightretribution/Binaries/Win32/FoxGame-win32-Shipping-Patched-Server.exe',
+        [
+          'server',
+          `${this.options.map.mapFileName}`,
+          `Name=${'NAME_GOES_HERE'}`,
+          `Game=FoxGame.FoxGameMP_${this.options.gamemode.gamemodeId}`,
+          `Port=${'POST_GOES_HERE'}`,
+          `NumBots=${this.options.bots}`,
+          `MaxPlayers=${'MAXPLAYERS_GOES_HERE'}`,
+          `Playlist=${this.options.playlist}`,
+          `SCP=${this.options.startingCP}`,
+          `TimeLimit=${this.options.timeLimit}`
+        ]
+      ) // TODO: This is probably wrong
       this.process.once('spawn', () => {
         console.log(`\n${blue}The server has successfully started!`)
         console.log(
@@ -96,7 +110,10 @@ export default class Server {
       startingCP: rawOptions.startingCP,
       map: new Map(rawOptions.map),
       gamemode: new Gamemode(rawOptions.gamemode),
-      playlist: new Gamemode(rawOptions.playlist)
+      playlist: new Gamemode(rawOptions.playlist),
+      name: rawOptions.name,
+      port: rawOptions.port,
+      maxPlayers: rawOptions.maxPlayers
     }
   }
 
@@ -161,6 +178,9 @@ export default class Server {
     if (typeof input.timeLimit !== 'number' || isNaN(input.timeLimit)) return false
     if (typeof input.autoRestart !== 'boolean') return false
     if (typeof input.startingCP !== 'number' || isNaN(input.startingCP)) return false
+    if (typeof input.name !== 'string') return false
+    if (typeof input.port !== 'number') return false
+    if (typeof input.maxPlayers !== 'number') return false
     return true
   }
 }
