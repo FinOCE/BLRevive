@@ -1,6 +1,6 @@
 import fs from 'fs'
 import ini from 'ini'
-import { ChildProcess, exec } from 'child_process'
+import { exec } from 'child_process'
 import Map from './Map'
 import Gamemode from './Gamemode'
 import { RawServerOptions, ServerOptions, ServerStats } from '@typings/server'
@@ -10,7 +10,6 @@ export default class Server {
 
   public path: string
   public options: ServerOptions
-  public process?: ChildProcess
   public stats?: ServerStats // TODO: Get server stats from node-ffi
 
   constructor() {
@@ -22,12 +21,15 @@ export default class Server {
    * Start the server process
    */
   public async start(): Promise<void> {
-    this.process = exec(`start "" "${this.path}" server "${this.createArgString()}"`)
-    this.process.once('spawn', () => {
+    const process = exec(`start "" "${this.path}" server "${this.createParamString()}"`)
+
+    process.once('spawn', () => {
+      // Add color to the console log
       const blue = '\x1b[34m'
       const yellow = '\x1b[33m'
       const white = '\x1b[37m'
 
+      // Log info to user
       console.log(`\n${blue}Your server is starting with these properties:`)
       console.log(
         [
@@ -46,9 +48,10 @@ export default class Server {
   }
 
   /**
-   * Generate argument string to launch the server
+   * Generate parameter string to launch the server
    */
-  private createArgString(): string {
+  private createParamString(): string {
+    // Map properties to the correct names for the parameters
     const args = Object.entries({
       Name: this.options.name,
       Game: `FoxGame.FoxGameMP_${this.options.gamemode.gamemodeId}`,
