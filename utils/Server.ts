@@ -1,24 +1,27 @@
 import fs from 'fs'
 import ini from 'ini'
-import { ChildProcess, spawn } from 'child_process'
+import { ChildProcess, exec } from 'child_process'
 import Map from './Map'
 import Gamemode from './Gamemode'
 import { RawServerOptions, ServerOptions, ServerStats } from '@typings/server'
 
 export default class Server {
   public options: ServerOptions
+  public loc: string
   public stats?: ServerStats // TODO: Get server stats from node-ffi
   public process?: ChildProcess
 
-  constructor() {
+  constructor(loc: string) {
     this.options = this.getOptionsFromFile('config.ini')
+
+    this.loc = loc
   }
 
   /**
    * Start the server process
    */
   public async start(): Promise<void> {
-    if (this.process) throw 'The server is already running!'
+    /*if (this.process) throw 'The server is already running!'
     return new Promise((resolve, reject) => {
       const blue = '\x1b[34m'
       const yellow = '\x1b[33m'
@@ -55,6 +58,30 @@ export default class Server {
         )
         resolve()
       })
+    })*/
+    // spawn(this.filename, [this.generateArgs()], {
+    //   cwd: this.cwd
+    // })
+    const process = exec(`start "" "${this.loc}" server "${this.createArgString()}"`)
+    process.once('spawn', () => {
+      const blue = '\x1b[34m'
+      const yellow = '\x1b[33m'
+      const white = '\x1b[37m'
+
+      console.log(`\n${blue}Your server is starting with these properties:`)
+      console.log(
+        [
+          '',
+          `${yellow}Map: ${white}${this.options.map.mapName}`,
+          `${yellow}Gamemode: ${white}${this.options.gamemode.gamemodeName}`,
+          `${yellow}Platlist: ${white}${this.options.playlist.gamemodeName}`,
+          `${yellow}Bot Count: ${white}${this.options.bots}`,
+          `${yellow}Time Limit: ${white}${this.options.timeLimit}`,
+          `${yellow}Auto Restart: ${white}${this.options.autoRestart}`,
+          `${yellow}Starting CP: ${white}${this.options.startingCP}`
+        ].join('\n  ')
+      )
+      console.log(`\n${blue}In a moment a console will open with your operational server.\n`)
     })
   }
 
@@ -115,6 +142,24 @@ export default class Server {
       port: rawOptions.port,
       maxPlayers: rawOptions.maxPlayers
     }
+  }
+
+  /**
+   * Generate argument string to launch the server
+   */
+  private createArgString(): string {
+    const args = Object.entries({
+      Name: this.options.name,
+      Game: `FoxGame.FoxGameMP_${this.options.gamemode.gamemodeId}`,
+      Port: this.options.port,
+      BotCount: this.options.bots,
+      MaxPlayers: this.options.maxPlayers,
+      Playlist: this.options.playlist.gamemodeId
+    })
+      .map(([key, value]) => `?${key}=${value}`)
+      .join()
+
+    return `${this.options.map.mapFileName}${args}`
   }
 
   /**
