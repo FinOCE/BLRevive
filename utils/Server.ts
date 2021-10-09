@@ -6,64 +6,24 @@ import Gamemode from './Gamemode'
 import { RawServerOptions, ServerOptions, ServerStats } from '@typings/server'
 
 export default class Server {
+  private static config = 'config.ini'
+
+  public path: string
   public options: ServerOptions
-  public loc: string
-  public stats?: ServerStats // TODO: Get server stats from node-ffi
   public process?: ChildProcess
+  public stats?: ServerStats // TODO: Get server stats from node-ffi
 
-  constructor(loc: string) {
-    this.options = this.getOptionsFromFile('config.ini')
-
-    this.loc = loc
+  constructor() {
+    this.path = this.getPathFromFile(Server.config)
+    this.options = this.getOptionsFromFile(Server.config)
   }
 
   /**
    * Start the server process
    */
   public async start(): Promise<void> {
-    /*if (this.process) throw 'The server is already running!'
-    return new Promise((resolve, reject) => {
-      const blue = '\x1b[34m'
-      const yellow = '\x1b[33m'
-      const white = '\x1b[37m'
-      this.process = spawn(
-        'C:/Program Files (x86)/Steam/steamapps/common/blacklightretribution/Binaries/Win32/FoxGame-win32-Shipping-Patched-Server.exe',
-        [
-          'server',
-          `${this.options.map.mapFileName}`,
-          `Name=${'NAME_GOES_HERE'}`,
-          `Game=FoxGame.FoxGameMP_${this.options.gamemode.gamemodeId}`,
-          `Port=${'POST_GOES_HERE'}`,
-          `NumBots=${this.options.bots}`,
-          `MaxPlayers=${'MAXPLAYERS_GOES_HERE'}`,
-          `Playlist=${this.options.playlist}`,
-          `SCP=${this.options.startingCP}`,
-          `TimeLimit=${this.options.timeLimit}`
-        ]
-      ) // TODO: This is probably wrong
-      this.process.once('spawn', () => {
-        console.log(`\n${blue}The server has successfully started!`)
-        console.log(
-          [
-            '',
-            `${yellow}Map: ${white}${this.options.map.mapName}`,
-            `${yellow}Gamemode: ${white}${this.options.gamemode.gamemodeName}`,
-            `${yellow}Platlist: ${white}${this.options.playlist.gamemodeName}`,
-            `${yellow}Bot Count: ${white}${this.options.bots}`,
-            `${yellow}Time Limit: ${white}${this.options.timeLimit}`,
-            `${yellow}Auto Restart: ${white}${this.options.autoRestart}`,
-            `${yellow}Starting CP: ${white}${this.options.startingCP}`,
-            ''
-          ].join('\n  ')
-        )
-        resolve()
-      })
-    })*/
-    // spawn(this.filename, [this.generateArgs()], {
-    //   cwd: this.cwd
-    // })
-    const process = exec(`start "" "${this.loc}" server "${this.createArgString()}"`)
-    process.once('spawn', () => {
+    this.process = exec(`start "" "${this.path}" server "${this.createArgString()}"`)
+    this.process.once('spawn', () => {
       const blue = '\x1b[34m'
       const yellow = '\x1b[33m'
       const white = '\x1b[37m'
@@ -74,7 +34,7 @@ export default class Server {
           '',
           `${yellow}Map: ${white}${this.options.map.mapName}`,
           `${yellow}Gamemode: ${white}${this.options.gamemode.gamemodeName}`,
-          `${yellow}Platlist: ${white}${this.options.playlist.gamemodeName}`,
+          `${yellow}Playlist: ${white}${this.options.playlist.gamemodeName}`,
           `${yellow}Bot Count: ${white}${this.options.bots}`,
           `${yellow}Time Limit: ${white}${this.options.timeLimit}`,
           `${yellow}Auto Restart: ${white}${this.options.autoRestart}`,
@@ -86,39 +46,30 @@ export default class Server {
   }
 
   /**
-   * Restart the server process
+   * Generate argument string to launch the server
    */
-  public async restart(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (!this.process) throw 'No server is currently running!'
-      this.stop()
-      this.start().then(() => resolve())
+  private createArgString(): string {
+    const args = Object.entries({
+      Name: this.options.name,
+      Game: `FoxGame.FoxGameMP_${this.options.gamemode.gamemodeId}`,
+      Port: this.options.port,
+      BotCount: this.options.bots,
+      MaxPlayers: this.options.maxPlayers,
+      Playlist: this.options.playlist.gamemodeId
     })
-  }
+      .map(([key, value]) => `?${key}=${value}`)
+      .join()
 
-  /**
-   * Stop the server process
-   */
-  public stop(): void {
-    if (!this.process) throw 'No server is currently running!'
-    this.process.kill()
-  }
-
-  /**
-   * Assign actions to events that take place on the server
-   */
-  public on(event: 'stdout' | 'stderr', callback: (data: string) => void): void {
-    if (!this.process) throw 'No server is currently running!'
-    this.process[event]?.on('data', (data: Buffer) => callback(data.toString()))
+    return `${this.options.map.mapFileName}${args}`
   }
 
   /**
    * Read a given `ini` file for server options
    */
-  private getOptionsFromFile(path: string): ServerOptions {
+  private getOptionsFromFile(file: string): ServerOptions {
     // Get file from path
-    const file = fs.readFileSync(path, { encoding: 'utf-8' })
-    const rawOptions = ini.parse(file)
+    const data = fs.readFileSync(file, { encoding: 'utf-8' })
+    const rawOptions = ini.parse(data)
 
     // Replace all valid numbers strings with numbers
     for (const i in rawOptions) {
@@ -145,21 +96,13 @@ export default class Server {
   }
 
   /**
-   * Generate argument string to launch the server
+   * Read a given `ini` file for the server exe path
    */
-  private createArgString(): string {
-    const args = Object.entries({
-      Name: this.options.name,
-      Game: `FoxGame.FoxGameMP_${this.options.gamemode.gamemodeId}`,
-      Port: this.options.port,
-      BotCount: this.options.bots,
-      MaxPlayers: this.options.maxPlayers,
-      Playlist: this.options.playlist.gamemodeId
-    })
-      .map(([key, value]) => `?${key}=${value}`)
-      .join()
-
-    return `${this.options.map.mapFileName}${args}`
+  private getPathFromFile(file: string): string {
+    const data = fs.readFileSync(file, { encoding: 'utf-8' })
+    const { path } = ini.parse(data)
+    if (!fs.existsSync(path)) throw 'Given server exe path does not exist!'
+    return path as string
   }
 
   /**
