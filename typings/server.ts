@@ -1,7 +1,6 @@
 import Map from '../utils/Map'
 import Gamemode from '../utils/Gamemode'
-import { MapName } from './map'
-import { GamemodeName } from './gamemode'
+import { GamemodeName, MapName } from './game'
 
 export type ServerOptions = {
   map: Map

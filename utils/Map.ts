@@ -1,4 +1,4 @@
-import { MapFileName, MapName, Maps } from '@typings/map'
+import { MapFileName, MapName, Maps } from '@typings/game'
 
 export default class Map {
   public mapName: MapName | null

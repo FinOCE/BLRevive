@@ -1,4 +1,4 @@
-import { GamemodeId, GamemodeName, Gamemodes } from '@typings/gamemode'
+import { GamemodeId, GamemodeName, Gamemodes } from '@typings/game'
 
 export default class Gamemode {
   public gamemodeName: GamemodeName | null
