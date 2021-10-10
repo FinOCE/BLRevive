@@ -1,4 +1,4 @@
-import Server from './utils/Server'
+import Server from './models/Server'
 
 const server = new Server()
 server.start()
