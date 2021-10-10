@@ -8,12 +8,12 @@ export default class extends Muzzle {
         gp: [120, 3920],
         zen: [10, 75]
       },
-      name: 'ArmCom Balanced Muzzle',
-      damage: 1,
+      name: 'Nexus Extended Range Muzzle',
+      damage: -1,
       aim: -0.03,
       hip: -0.06,
       move: -0.06,
-      recoil: 0.13,
+      recoil: -0.04,
       range: [1, 1]
     })
   }
