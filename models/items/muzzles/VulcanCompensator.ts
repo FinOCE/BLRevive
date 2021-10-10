@@ -10,9 +10,11 @@ export default class extends Muzzle {
       },
       name: 'Vulcan Compensator',
       damage: -1,
-      aim: null,
-      hip: null,
-      move: null,
+      spread: {
+        aim: null,
+        hip: null,
+        move: null
+      },
       recoil: -0.07,
       range: [null, null]
     })

@@ -10,9 +10,11 @@ export default class extends Muzzle {
       },
       name: 'Silverwood Flash Breaker',
       damage: 1,
-      aim: null,
-      hip: null,
-      move: null,
+      spread: {
+        aim: null,
+        hip: null,
+        move: null
+      },
       recoil: 0.08,
       range: [null, null]
     })

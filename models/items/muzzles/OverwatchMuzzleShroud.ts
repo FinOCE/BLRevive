@@ -10,9 +10,11 @@ export default class extends Muzzle {
       },
       name: 'Overwatch Muzzle Shroud',
       damage: 0,
-      aim: 0,
-      hip: 0,
-      move: 0,
+      spread: {
+        aim: 0,
+        hip: 0,
+        move: 0
+      },
       recoil: 0,
       range: [0, 0]
     })

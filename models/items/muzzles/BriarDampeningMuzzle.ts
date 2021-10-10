@@ -10,9 +10,11 @@ export default class extends Muzzle {
       },
       name: 'Briar Dampening Muzzle',
       damage: null,
-      aim: null,
-      hip: null,
-      move: null,
+      spread: {
+        aim: null,
+        hip: null,
+        move: null
+      },
       recoil: -0.04,
       range: [null, null]
     })

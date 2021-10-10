@@ -10,9 +10,11 @@ export default class extends Muzzle {
       },
       name: 'Vulcan Notched Flash Breaker',
       damage: -2,
-      aim: null,
-      hip: null,
-      move: null,
+      spread: {
+        aim: null,
+        hip: null,
+        move: null
+      },
       recoil: -0.15,
       range: [null, null]
     })

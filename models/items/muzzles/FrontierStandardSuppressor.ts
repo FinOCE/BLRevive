@@ -10,9 +10,11 @@ export default class extends Muzzle {
       },
       name: 'Frontier Standard Suppressor',
       damage: -1,
-      aim: 0.03,
-      hip: 0.06,
-      move: 0.07,
+      spread: {
+        aim: 0.03,
+        hip: 0.06,
+        move: 0.07
+      },
       recoil: -0.12,
       range: [-1, -1]
     })
