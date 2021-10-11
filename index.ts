@@ -1,5 +1,5 @@
 import Server from './models/Server'
-import DefaultAR from './models/items/weapons/DefaultAR'
+import Weapon from './models/items/Weapon'
 
 function testServer() {
   const server = new Server()
@@ -7,7 +7,7 @@ function testServer() {
 }
 
 function testWeapon() {
-  const weapon = new DefaultAR()
+  const weapon = new Weapon()
   console.log(weapon)
 }
 
