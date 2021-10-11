@@ -1,51 +1,43 @@
 import Barrel from './Barrel'
+import Magazine from './Magazine'
 import Muzzle from './Muzzle'
 import Receiver from './Receiver'
 import Scope from './Scope'
 import Stock from './Stock'
 import WeaponPart from './WeaponPart'
 
-interface WeaponData {
+interface WeaponParts<T> {
+  barrel: Barrel
+  muzzle: Muzzle
+  receiver: Receiver<T>
+  scope: Scope
+  stock: Stock
+  magazine: Magazine<T>
+}
+
+interface WeaponData<T> extends WeaponParts<T> {
   name: string
-  barrel: Barrel
-  muzzle: Muzzle
-  receiver: Receiver
-  scope: Scope
-  stock: Stock
 }
 
-interface WeaponParts {
-  barrel: Barrel
-  muzzle: Muzzle
-  receiver: Receiver
-  scope: Scope
-  stock: Stock
-}
+type WeaponStats<T> = Omit<WeaponPart & Receiver<T> & Scope, 'rarity' | 'name' | 'missingData'>
 
-type WeaponStats = Omit<WeaponPart & Receiver & Scope, 'rarity' | 'name' | 'missingData'>
-
-export default abstract class Weapon {
+export default abstract class Weapon<T> {
   public name: string
-  public parts: {
-    barrel: Barrel
-    muzzle: Muzzle
-    receiver: Receiver
-    scope: Scope
-    stock: Stock
-  }
-  public stats: WeaponStats
+  public parts: WeaponParts<T>
+  public stats: WeaponStats<T>
 
-  constructor(data: WeaponData) {
+  constructor(data: WeaponData<T>) {
     this.name = data.name
     this.parts = {
       barrel: data.barrel,
       muzzle: data.muzzle,
       receiver: data.receiver,
       scope: data.scope,
-      stock: data.stock
+      stock: data.stock,
+      magazine: data.magazine
     }
     this.stats = (() => {
-      const stats: WeaponStats = {
+      const stats: WeaponStats<T> = {
         price: {
           gp: [0, 0],
           zen: [0, 0]
@@ -72,7 +64,7 @@ export default abstract class Weapon {
       }
 
       for (const name in this.parts) {
-        const part = this.parts[name as keyof WeaponParts]
+        const part = this.parts[name as keyof WeaponParts<T>]
 
         stats.price.gp[0] += part.price.gp[0]
         stats.price.gp[1] += part.price.gp[1]

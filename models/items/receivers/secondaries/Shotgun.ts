@@ -1,6 +1,6 @@
 import Receiver from '../../Receiver'
 
-export default class extends Receiver {
+export default class extends Receiver<'SHOT'> {
   constructor() {
     super({
       rarity: null,

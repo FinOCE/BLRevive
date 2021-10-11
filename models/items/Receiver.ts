@@ -12,7 +12,7 @@ interface ReceiverData extends WeaponPartData {
     | 'Bow and Arrow'
 }
 
-export default abstract class Receiver extends WeaponPart {
+export default abstract class Receiver<T> extends WeaponPart {
   public type: 'Primary' | 'Secondary'
   public fireMode:
     | 'Automatic'

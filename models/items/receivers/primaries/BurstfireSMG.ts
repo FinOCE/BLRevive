@@ -1,6 +1,6 @@
 import Receiver from '../../Receiver'
 
-export default class extends Receiver {
+export default class extends Receiver<'BFS'> {
   constructor() {
     super({
       rarity: null,
