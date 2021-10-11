@@ -13,6 +13,7 @@ interface MuzzleData {
   }
   recoil?: number
   range?: [number, number]
+  missingData?: boolean
 }
 
 export default abstract class Muzzle extends Item {
@@ -25,6 +26,7 @@ export default abstract class Muzzle extends Item {
   }
   public recoil: number
   public range: [number, number]
+  public missingData: boolean
 
   constructor(data: MuzzleData) {
     super({
@@ -44,5 +46,6 @@ export default abstract class Muzzle extends Item {
     }
     this.recoil = data.recoil ?? 0
     this.range = data.range ?? [0, 0]
+    this.missingData = data.missingData ?? false
   }
 }
