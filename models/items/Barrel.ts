@@ -1,30 +1,54 @@
+import { Price, Rarity } from '@typings/item'
 import Item from './Item'
+
+interface BarrelData {
+  rarity?: Rarity
+  price?: Price
+  name?: string
+  damage?: number
+  spread?: {
+    aim?: number
+    hip?: number
+    move?: number
+  }
+  recoil?: number
+  scopeIn?: number
+  range?: [number, number]
+  run?: number
+}
 
 export default abstract class Barrel extends Item {
   public name: string
-  public damage: number | null
+  public damage: number
   public spread: {
-    aim: number | null
-    hip: number | null
-    move: number | null
+    aim: number
+    hip: number
+    move: number
   }
-  public recoil: number | null
-  public scopeIn: number | null
-  public range: [number, number] | [null, null]
-  public run: number | null
+  public recoil: number
+  public scopeIn: number
+  public range: [number, number]
+  public run: number
 
-  constructor(data: Barrel) {
+  constructor(data: BarrelData) {
     super({
-      rarity: data.rarity,
-      price: data.price
+      rarity: data.rarity ?? 'Uncommon',
+      price: data.price ?? {
+        gp: [120, 3920],
+        zen: [10, 75]
+      }
     })
 
-    this.name = data.name
-    this.damage = data.damage
-    this.spread = data.spread
-    this.recoil = data.recoil
-    this.scopeIn = data.scopeIn
-    this.range = data.range
-    this.run = data.run
+    this.name = data.name!
+    this.damage = data.damage ?? 0
+    this.spread = {
+      aim: data.spread?.aim ?? 0,
+      hip: data.spread?.hip ?? 0,
+      move: data.spread?.move ?? 0
+    }
+    this.recoil = data.recoil ?? 0
+    this.scopeIn = data.scopeIn ?? 0
+    this.range = data.range ?? [0, 0]
+    this.run = data.run ?? 0
   }
 }

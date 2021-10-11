@@ -3,13 +3,7 @@ import Barrel from '../Barrel'
 export default class extends Barrel {
   constructor() {
     super({
-      rarity: 'Uncommon',
-      price: {
-        gp: [120, 3920],
-        zen: [10, 75]
-      },
       name: 'Briar BAR-02', // FOR BULLPUP FULL AUTO
-      damage: 0,
       spread: {
         aim: -0.23,
         hip: -0.2,
