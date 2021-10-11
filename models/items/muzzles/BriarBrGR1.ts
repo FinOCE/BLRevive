@@ -8,7 +8,7 @@ export default class extends Muzzle {
         gp: [0, 0],
         zen: [0, 0]
       },
-      name: 'Overwatch Muzzle Shroud'
+      name: 'Briar BrGR1' // FOR SHOTGUN
     })
   }
 }
