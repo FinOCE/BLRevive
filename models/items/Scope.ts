@@ -1,4 +1,4 @@
-import { WeaponPartData, WeaponPart } from './WeaponPart'
+import WeaponPart, { WeaponPartData } from './WeaponPart'
 
 interface ScopeData extends WeaponPartData {
   showsAmmo?: boolean

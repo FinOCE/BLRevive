@@ -23,7 +23,7 @@ export interface WeaponPartData {
   missingData?: boolean // For if wiki is missing info
 }
 
-export class WeaponPart extends Item {
+export default abstract class WeaponPart extends Item {
   public name: string
   public damage: number
   public fireRate: number

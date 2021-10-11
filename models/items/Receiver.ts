@@ -1,4 +1,4 @@
-import { WeaponPartData, WeaponPart } from './WeaponPart'
+import WeaponPart, { WeaponPartData } from './WeaponPart'
 
 interface ReceiverData extends WeaponPartData {
   type: 'Primary' | 'Secondary'

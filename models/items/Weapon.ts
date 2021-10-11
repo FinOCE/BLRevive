@@ -3,7 +3,7 @@ import Muzzle from './Muzzle'
 import Receiver from './Receiver'
 import Scope from './Scope'
 import Stock from './Stock'
-import { WeaponPart } from './WeaponPart'
+import WeaponPart from './WeaponPart'
 
 interface WeaponData {
   name: string
@@ -24,7 +24,7 @@ interface WeaponParts {
 
 type WeaponStats = Omit<WeaponPart & Receiver & Scope, 'rarity' | 'name' | 'missingData'>
 
-export default class Weapon {
+export default abstract class Weapon {
   public name: string
   public parts: {
     barrel: Barrel
