@@ -1,5 +1,5 @@
 import OvermatchMuzzleShroud from '../muzzles/OvermatchMuzzleShroud'
-import AssaultRifle from '../receivers/primaries/AssaultRifle'
+import BoltActionRifle from '../receivers/primaries/BoltActionRifle'
 import TitanRailSight from '../scopes/TitanRailSight'
 import SilverwoodStandardStock from '../stocks/SilverwoodStandardStock'
 import Weapon from '../Weapon'
@@ -7,10 +7,10 @@ import Weapon from '../Weapon'
 export default class extends Weapon {
   constructor() {
     super({
-      name: 'Default AR',
+      name: 'Default BAR',
       barrel: new SilverwoodStandardStock(),
       muzzle: new OvermatchMuzzleShroud(),
-      receiver: new AssaultRifle(),
+      receiver: new BoltActionRifle(),
       scope: new TitanRailSight(),
       stock: new SilverwoodStandardStock()
     })
