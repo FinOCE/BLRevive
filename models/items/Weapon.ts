@@ -83,6 +83,11 @@ export default class Weapon {
         stats.ammo[0] += part.ammo[0]
         stats.ammo[1] += part.ammo[1]
         stats.reload += part.reload
+        stats.swapRate += part.swapRate
+        stats.spread.aim += part.spread.aim
+        stats.spread.hip += part.spread.hip
+        stats.spread.move += part.spread.move
+        stats.recoil += part.recoil
         stats.zoom += part.zoom
         stats.scopeIn += part.scopeIn
         stats.range[0] += part.range[0]
