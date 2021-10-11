@@ -4,7 +4,7 @@ import Item from './Item'
 interface MuzzleData {
   rarity?: Rarity
   price?: Price
-  name?: string
+  name: string
   damage?: number
   spread?: {
     aim?: number
@@ -37,7 +37,7 @@ export default abstract class Muzzle extends Item {
       }
     })
 
-    this.name = data.name!
+    this.name = data.name
     this.damage = data.damage ?? 0
     this.spread = {
       aim: data.spread?.aim ?? 0,
