@@ -1,6 +1,6 @@
 import Receiver from '../../Receiver'
 
-export default class extends Receiver<'BFP'> {
+export default class extends Receiver {
   constructor() {
     super({
       rarity: null,
@@ -8,6 +8,7 @@ export default class extends Receiver<'BFP'> {
         gp: [300, 16800],
         zen: [35, 300]
       },
+      labels: ['BFP'],
       name: 'Burstfire Pistol',
       type: 'Secondary',
       damage: 48,

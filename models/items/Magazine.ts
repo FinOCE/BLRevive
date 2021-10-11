@@ -1,6 +1,6 @@
 import WeaponPart, { WeaponPartData } from './WeaponPart'
 
-export default abstract class Magazine<T> extends WeaponPart {
+export default abstract class Magazine extends WeaponPart {
   constructor(data: WeaponPartData) {
     super(
       Object.assign(data, {

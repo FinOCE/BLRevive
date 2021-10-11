@@ -1,5 +1,33 @@
 import WeaponPart, { WeaponPartData } from './WeaponPart'
 
+export type ReceiverLabel =
+  | 'AK470'
+  | 'AMR'
+  | 'AR'
+  | 'BAR'
+  | 'BPFA'
+  | 'BFR'
+  | 'BFS'
+  | 'CR'
+  | 'CB'
+  | 'HAR'
+  | 'LMG'
+  | 'LRR'
+  | 'LMGR'
+  | 'M4X'
+  | 'SMG'
+  | 'TAR'
+  | 'TSMG'
+  | 'BLP'
+  | 'BFP'
+  | 'HP'
+  | 'LP'
+  | 'MP'
+  | 'REV'
+  | 'SHOT'
+  | 'SARK'
+  | 'SNUB'
+
 interface ReceiverData extends WeaponPartData {
   type: 'Primary' | 'Secondary'
   fireMode:
@@ -12,7 +40,8 @@ interface ReceiverData extends WeaponPartData {
     | 'Bow and Arrow'
 }
 
-export default abstract class Receiver<T> extends WeaponPart {
+export default abstract class Receiver extends WeaponPart {
+  public label: ReceiverLabel
   public type: 'Primary' | 'Secondary'
   public fireMode:
     | 'Automatic'
@@ -28,6 +57,7 @@ export default abstract class Receiver<T> extends WeaponPart {
 
     super(data)
 
+    this.label = data.labels[0]
     this.type = data.type
     this.fireMode = data.fireMode
   }

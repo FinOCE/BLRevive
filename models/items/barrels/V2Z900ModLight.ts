@@ -3,7 +3,8 @@ import Barrel from '../Barrel'
 export default class extends Barrel {
   constructor() {
     super({
-      name: 'V2 Z900 Mod', // FOR LIGHT PISTOL, ALLOWS STOCK
+      labels: ['LP'],
+      name: 'V2 Z900 Mod',
       damage: 7,
       spread: {
         aim: -0.05,

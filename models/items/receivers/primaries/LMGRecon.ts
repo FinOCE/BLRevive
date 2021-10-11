@@ -1,6 +1,6 @@
 import Receiver from '../../Receiver'
 
-export default class extends Receiver<'LMGR'> {
+export default class extends Receiver {
   constructor() {
     super({
       rarity: null,
@@ -8,6 +8,7 @@ export default class extends Receiver<'LMGR'> {
         gp: [300, 25200],
         zen: [35, 300]
       },
+      labels: ['LMGR'],
       name: 'LMG Recon',
       type: 'Primary',
       damage: 68,

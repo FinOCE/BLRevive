@@ -1,8 +1,9 @@
 import Magazine from '../Magazine'
 
-export default class extends Magazine<'AR'> {
+export default class extends Magazine {
   constructor() {
     super({
+      labels: ['AR'],
       name: 'Vulcan STD-01 AR',
       rarity: 'Common',
       price: {

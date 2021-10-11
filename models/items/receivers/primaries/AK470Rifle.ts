@@ -1,8 +1,9 @@
 import Receiver from '../../Receiver'
 
-export default class extends Receiver<'AK470'> {
+export default class extends Receiver {
   constructor() {
     super({
+      labels: ['AK470'],
       rarity: null,
       price: {
         gp: [300, 25200],

@@ -1,9 +1,11 @@
 import { Price, Rarity } from '@typings/item'
 import Item from './Item'
+import { ReceiverLabel } from './Receiver'
 
 export interface WeaponPartData {
   rarity?: Rarity
   price?: Price
+  labels: ReceiverLabel[]
   name: string
   damage?: number
   fireRate?: number
@@ -24,6 +26,7 @@ export interface WeaponPartData {
 }
 
 export default abstract class WeaponPart extends Item {
+  public labels: ReceiverLabel[]
   public name: string
   public damage: number
   public fireRate: number
@@ -51,6 +54,7 @@ export default abstract class WeaponPart extends Item {
       }
     })
 
+    this.labels = data.labels
     this.name = data.name
     this.damage = data.damage ?? 0
     this.fireRate = data.fireRate ?? 0

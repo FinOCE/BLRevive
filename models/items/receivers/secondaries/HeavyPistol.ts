@@ -1,6 +1,6 @@
 import Receiver from '../../Receiver'
 
-export default class extends Receiver<'HP'> {
+export default class extends Receiver {
   constructor() {
     super({
       rarity: null,
@@ -8,6 +8,7 @@ export default class extends Receiver<'HP'> {
         gp: [300, 16800],
         zen: [35, 300]
       },
+      labels: ['HP'],
       name: 'Heavy Pistol',
       type: 'Secondary',
       damage: 55,
