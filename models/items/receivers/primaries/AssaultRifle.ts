@@ -21,7 +21,7 @@ export default class extends Receiver {
         hip: 2.29,
         move: 4.15
       },
-      recoil: 8.16,
+      recoil: 26.9,
       scopeIn: 0.22,
       range: [40, 70],
       run: 7.65
