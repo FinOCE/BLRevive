@@ -21,10 +21,6 @@ interface WeaponParts {
   magazine: Magazine
 }
 
-interface WeaponData extends WeaponParts {
-  name: string
-}
-
 type WeaponStats = Omit<WeaponPart & Receiver & Scope, 'rarity' | 'name' | 'label' | 'labels' | 'missingData'>
 
 export default class Weapon {
@@ -73,6 +69,8 @@ export default class Weapon {
     for (const name in this.parts) {
       const part = this.parts[name as keyof WeaponParts]
       if (!part) continue
+
+      if (part.price.gp[0] > 0) console.log(part.name)
 
       stats.price.gp[0] += part.price.gp[0]
       stats.price.gp[1] += part.price.gp[1]
