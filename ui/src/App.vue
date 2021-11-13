@@ -1,20 +1,20 @@
 <template>
-  <Item />
+  <ItemContainer />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Item from './components/Item.vue'
+import ItemContainer from './components/ItemContainer.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Item
+    ItemContainer
   }
 })
 </script>
 
 <style lang="sass">
 body
-  background: #000
+  background: #2B4043
 </style>
